@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Список задач</h1>
+    
+    <form method="get" class="mb-4">
+        <div class="mb-3">
+            <label for="category" class="form-label">Категория</label>
+            <select id="category" name="category" class="form-select">
+                <option value="">Все категории</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="mb-3">
+            <label for="search" class="form-label">Поиск по названию</label>
+            <input type="text" id="search" name="search" class="form-control" placeholder="Введите название задачи">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Фильтровать</button>
+    </form>
+    
+    <ul class="list-group">
+        {% for task in tasks %}
+            <li class="list-group-item">
+                <a href="{% url 'task_detail' task.pk %}">{{ task.title }}</a> (Категория: {{ task.category.name }})
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
